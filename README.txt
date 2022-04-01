@@ -1,5 +1,5 @@
-# bsmap
-forked version derived from BSMAP 2.90
+this is a forked version derived from bsmap 2.90
+BSMAP 2.73
 
 1. Introduction
 
@@ -19,6 +19,7 @@ Main features:
     include script to extract methylation ratios
 
 BSMAP is under GNU Public License (GPL).
+
 
 2. Installation
 
@@ -238,7 +239,6 @@ Usage: python methratio.py [options] BSMAP_MAPPING_FILES
 BSMAP_MAPPING_FILES could be one or more output files from BSMAP.
 The format will be determined by the filename suffix. 
 (SAM format for *.sam and *.bam, BSP format for other filenames.)
-Please note: the methratio.py script only works with old samtools since it uses the character representation of the FLAG field which is been obsolete in newer version of samtools. We recommend using the samtools (v0.0.18) included in the bsmap package.
 
 Options:
   -h, --help            show this help message and exit
@@ -359,8 +359,10 @@ Note: For pair-end BSP output, this script will conver it into single-end SAM ou
 
 9. Contact
     Yuanxin Xi
-    Principle Bioinformatician
-    Department of Bioinformatics and Computational Biology 
-    The University of Texas MD Anderson Cancer Center
+    Bioinformatics Division, 
+    Dan L. Duncan Cancer Center,
+    Baylor College of Medicince, 
     Houston, TX 77030, USA
-    xiyuanxin@gmail.com
+    713-798-6254
+    yxi@bcm.tmc.edu, xiyuanxin@gmail.com
+    
