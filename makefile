@@ -17,7 +17,7 @@ all: bsmap
 	$(CC) $(FLAGS) -c $< -o $@
 bsmap: $(OBJS1)
 	(cd gzstream; make)
-	$(CC) $(FLAGS) $^ -o $@ $(THREAD) -lbam -lz -lgzstream
+	$(CC) $(FLAGS) $^ -o $@ $(THREAD) -lz -lgzstream
 	rm -f *.o
 
 clean:
