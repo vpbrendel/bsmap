@@ -1,28 +1,38 @@
-CC=	g++
+CC = g++
 
-BIN = $(DESTDIR)/usr/bin
-FLAGS= -DMAXHITS=1000 -DTHREAD -funroll-loops -lhts -I../htslib/htslib -Lgzstream -Igzstream -O3 -m64
-#FLAGS= -DMAXHITS=1000 -DTHREAD -funroll-loops -lhts -L/projects/vbrendel/DSBSwf/htslib -I/projects/vbrendel/DSBSwf/htslib/htslib -Lgzstream -Igzstream -O3 -m64
-#FLAGS= -DMAXHITS=1000 -funroll-loops -Lsamtools -Isamtools -Lgzstream -Igzstream -g -m64
-#FLAGS= -DMAXHITS=1000 -funroll-loops -Lsamtools -Isamtools -Lgzstream -Igzstream -O3 -Wall -Wno-strict-aliasing -m64
+BIN = /usr/local/bin
+
+# Set location of htslib directory:
+#
+HTSDIR = ../htslib
+
+CMPFLAGS = -DMAXHITS=1000 -DTHREAD -funroll-loops -O3 -m64
+
+CPPFLAGS = -Igzstream -I$(HTSDIR)/htslib
+LDFLAGS  = -Lgzstream -lgzstream -lz -L$(HTSDIR) -lhts
+THREAD   = -lpthread
 
 
-THREAD=	-lpthread
+SOURCE  = align dbseq main pairs param reads utilities
+OBJECTS = $(patsubst %,%.o,$(SOURCE))
 
-SOURCE = align dbseq main pairs param reads utilities
-OBJS1= $(patsubst %,%.o,$(SOURCE))
+all: libgzstream.a bsmap
 
-all: bsmap
 %.o:%.cpp
-	$(CC) $(FLAGS) -c $< -o $@
-bsmap: $(OBJS1)
+	$(CC) $(CMPFLAGS) $(CPPFLAGS) -c $< -o $@
+
+libgzstream.a:	gzstream/gzstream.o
 	(cd gzstream; make)
-	$(CC) $(FLAGS) $^ -o $@ $(THREAD) -lz -lgzstream
+
+bsmap:	$(OBJECTS)
+	$(CC) $(CMPFLAGS)  $^ -o $@ $(THREAD) $(LDFLAGS)
 	rm -f *.o
+
 
 clean:
 	rm -f *.o *~ bsmap
 	(cd gzstream; make clean)
+
 install:
 	install -d $(BIN)
 	install ./bsmap $(BIN)

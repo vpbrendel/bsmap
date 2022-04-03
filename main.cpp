@@ -15,6 +15,7 @@
 #include "param.h"
 #include "pairs.h"
 #include "sam.h"
+#include "gzstream.h"
 #include "utilities.h"
 
 
@@ -621,7 +622,10 @@ int main(int argc, char *argv[]) {
 		char *res=realpath(out_align_file.c_str(), abs_bam_file);
 		if(res) {
 		    sprintf(sys_cmd,"sam2bam.sh %s",abs_bam_file);
-		    system(sys_cmd);
+		    if (system(sys_cmd) == -1) {
+			cerr<< sys_cmd << " command failed.\n";
+                        exit(1);
+                    }
 		} 
 		else {
 		    message<<"[bsmap] warning: cannot get absolute path for sam2bam.sh input. alignment file remains in SAM format.\n"; 
