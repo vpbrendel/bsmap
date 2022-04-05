@@ -401,7 +401,7 @@ int check_ifile_format(string &filename, int gz_flag) {
 }
 
 void RunProcess(void) {
-	char _ch[256]; string _str="@HD\tVN:1.0\n";
+	char _ch[1000]; string _str="@HD\tVN:1.0\n";
 	if(out_align_file.size()>4){
 	    if(out_align_file.compare(out_align_file.size()-4,4,".sam")==0) param.out_sam=1;
 	    else if (out_align_file.compare(out_align_file.size()-4,4,".bam")==0) param.out_sam=2;
